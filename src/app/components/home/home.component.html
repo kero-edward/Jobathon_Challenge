@@ -16,11 +16,61 @@
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <app-task-form></app-task-form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <form [formGroup]="taskForm" class="row g-3 p-5">
+                    <div class="row">
+
+                        <!-- name -->
+                        <div class="mb-3 col-md-12">
+                            <input type="text" class="form-control" formControlName="name" placeholder="Task Name">
+                            <div *ngIf="(taskData['name'].touched && taskData['name'].invalid) && taskData['name'].errors"
+                                class="text-danger p-0">
+                                <div *ngIf="taskData['name'].errors && taskData['name'].errors['required']">
+                                    Task name is required!
+                                </div>
+                            </div>
+                        </div>
+                        <!-- name -->
+
+                        <!-- description -->
+                        <div class="mb-3 col-md-12">
+                            <input type="text" class="form-control" formControlName="description"
+                                placeholder="Description">
+                            <div *ngIf="(taskData['description'].touched && taskData['description'].invalid) && taskData['description'].errors"
+                                class="text-danger p-0">
+                                <div
+                                    *ngIf="taskData['description'].errors && taskData['description'].errors['required']">
+                                    Description is required!
+                                </div>
+                            </div>
+                        </div>
+                        <!-- description -->
+
+                        <!-- status -->
+                        <div class="mb-3 col-md-12">
+                            <select class="form-select form-control" formControlName="status"
+                                aria-label="Default select example">
+                                <option selected disabled>Select Task Status</option>
+                                <option value="not started">Not Started</option>
+                                <option value="in progress">In Progress</option>
+                                <option value="finished">Finished</option>
+                            </select>
+
+                            <div *ngIf="(taskData['status'].touched && taskData['status'].invalid) && taskData['status'].errors"
+                                class="text-danger p-0">
+                                <div *ngIf="taskData['status'].errors && taskData['status'].errors['required']">
+                                    Status is required!
+                                </div>
+                            </div>
+                        </div>
+                        <!-- status -->
+                    </div>
+
+                    <div class="text-center">
+                        <button [disabled]="taskForm.invalid" [ngClass]="taskForm.invalid ? 'disableBtn' : '' "
+                            type="button" class="btn btn-success btn-rounded text-capitalize mt-4"
+                            (click)="get_and_save_data()">save</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -37,7 +87,87 @@
             <div class="row">
                 <h3 class="col-md-6">{{task.name}}</h3>
                 <div class="col-md-6">
-                    <button type="button" class="btn btn-primary me-2">edit</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary me-2" data-mdb-toggle="modal"
+                        data-mdb-target="#exampleModal2" (click)="getTaskData(task.id)">
+                        edit
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-capitalize" id="exampleModalLabel">add new task</h5>
+                                    <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="taskForm" class="row g-3 p-5">
+                                        <div class="row">
+
+                                            <!-- name -->
+                                            <div class="mb-3 col-md-12">
+                                                <input type="text" class="form-control" formControlName="name"
+                                                    placeholder="Task Name">
+                                                <div *ngIf="(taskData['name'].touched && taskData['name'].invalid) && taskData['name'].errors"
+                                                    class="text-danger p-0">
+                                                    <div
+                                                        *ngIf="taskData['name'].errors && taskData['name'].errors['required']">
+                                                        Task name is required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- name -->
+
+                                            <!-- description -->
+                                            <div class="mb-3 col-md-12">
+                                                <input type="text" class="form-control" formControlName="description"
+                                                    placeholder="Description">
+                                                <div *ngIf="(taskData['description'].touched && taskData['description'].invalid) && taskData['description'].errors"
+                                                    class="text-danger p-0">
+                                                    <div
+                                                        *ngIf="taskData['description'].errors && taskData['description'].errors['required']">
+                                                        Description is required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- description -->
+
+                                            <!-- status -->
+                                            <div class="mb-3 col-md-12">
+                                                <select class="form-select form-control" formControlName="status"
+                                                    aria-label="Default select example">
+                                                    <option selected disabled>Select Task Status</option>
+                                                    <option value="not started">Not Started</option>
+                                                    <option value="in progress">In Progress</option>
+                                                    <option value="finished">Finished</option>
+                                                </select>
+
+                                                <div *ngIf="(taskData['status'].touched && taskData['status'].invalid) && taskData['status'].errors"
+                                                    class="text-danger p-0">
+                                                    <div
+                                                        *ngIf="taskData['status'].errors && taskData['status'].errors['required']">
+                                                        Status is required!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- status -->
+                                        </div>
+
+                                        <div class="text-center">
+                                            <button [disabled]="taskForm.invalid"
+                                                [ngClass]="taskForm.invalid ? 'disableBtn' : '' " type="button"
+                                                class="btn btn-success btn-rounded text-capitalize mt-4"
+                                                (click)="get_and_update_data()">save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <button type="button" class="btn btn-danger ms-2" (click)="deleteTask(task.id)">x</button>
                 </div>
             </div>
