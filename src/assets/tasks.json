@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "task 1",
+        "description": "lorem ipsum dolor sit amet",
+        "status": "in progress"
+    },
+    {
+        "id": 2,
+        "name": "task 2",
+        "description": "lorem ipsum dolor sit amet",
+        "status": "not started"
+    },
+    {
+        "id": 3,
+        "name": "task 3",
+        "description": "lorem ipsum dolor sit amet",
+        "status": "finished"
+    }
+]

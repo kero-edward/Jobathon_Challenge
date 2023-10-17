@@ -1,0 +1,61 @@
+<h1 class="text-capitalize m-3 text-decoration-underline">tasks</h1>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary m-3 text-capitalize" data-mdb-toggle="modal"
+    data-mdb-target="#exampleModal">
+    add new task
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-capitalize" id="exampleModalLabel">add new task</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-task-form></app-task-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<section class="m-3">
+    <div class="row">
+
+        <div class="col-md-6" *ngFor="let task of tasks; trackBy: taskTrackBy">
+            <div class="row">
+                <h3 class="col-md-6">{{task.name}}</h3>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary me-2">edit</button>
+                    <button type="button" class="btn btn-danger ms-2" (click)="deleteTask(task.id)">x</button>
+                </div>
+            </div>
+
+            <h6>{{task.description}}</h6>
+            <div class="fw-bold text-capitalize" [ngSwitch]="task.status">
+                <ng-container *ngSwitchCase="'not started'">
+                    <p class="text-primary">not started</p>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'in progress'">
+                    <p class="text-warning">in progress</p>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'finished'">
+                    <p class="text-success">finished</p>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</section>
